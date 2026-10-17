@@ -10,8 +10,24 @@ A native macOS app for tracking movies, series, anime, and telenovelas with your
 
 StreamVibes is usable for its core catalog and shared watch-tracking workflows.
 Configure your own PostgreSQL database; AI and movie metadata providers are optional.
-Public distribution signing/notarization and broader end-to-end checks remain
-separate release work. Build from source; signed installers are not provided yet.
+Developer downloads are available from [GitHub Releases](https://github.com/bujosa/stream-vibes/releases).
+They are ad-hoc signed, not Apple Developer ID signed or notarized. macOS can block
+the first launch; read the release notes before installing. Broader end-to-end
+checks remain separate release work.
+
+## Download
+
+Download the versioned macOS DMG and `SHA256SUMS.txt` from the release page.
+The universal app supports Apple Silicon and Intel Macs running macOS 14+.
+Open the DMG and drag StreamVibes to Applications. Configure your own database
+when launching for the first time. These are macOS downloads, not Windows or Linux apps.
+
+See [Apple's guidance on opening downloaded apps](https://support.apple.com/en-us/102445)
+for Gatekeeper messages. Only install a build whose source and checksum you trust;
+do not disable Gatekeeper globally.
+
+[Watch the shared-catalog walkthrough](https://github.com/bujosa/stream-vibes/releases/download/v1.0.0/StreamVibes-Walkthrough.mp4)
+(edited real-app captures, fictional data, English narration, English/Spanish subtitles).
 
 ## Features
 
@@ -84,7 +100,7 @@ separate release work. Build from source; signed installers are not provided yet
 - Animated AI loading indicators during AI searches
 - Multi-user support with user switching
 - Tabbed settings navigation (General, AI, Maintenance, About)
-- Auto-refresh every 5 seconds for real-time updates
+- Auto-refresh every 30 seconds for shared catalog and list-summary updates
 - Keyboard shortcut (Cmd+R) for manual refresh
 
 ## Credentials and privacy
@@ -120,6 +136,9 @@ rejected. Local/self-hosted servers need a trusted certificate or an explicit
 
 Profiles share the database role's access; the user switcher is for attribution,
 not separate authorization. See [SECURITY.md](SECURITY.md).
+
+For a hosted setup with a partner or friends, see
+[Shared catalog and Neon setup](docs/shared-catalog.md).
 
 ### 1. Install dependencies
 

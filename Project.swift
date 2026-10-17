@@ -11,6 +11,8 @@ let project = Project(
             deploymentTargets: .macOS("14.0"),
             infoPlist: .extendingDefault(with: [
                 "CFBundleDisplayName": "StreamVibes",
+                "CFBundleShortVersionString": "1.0.0",
+                "CFBundleVersion": "1",
                 "CFBundleIconFile": "",
                 "CFBundleIconName": "AppIcon",
                 "NSMainNibFile": "",
