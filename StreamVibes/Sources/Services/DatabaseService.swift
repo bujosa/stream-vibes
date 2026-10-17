@@ -549,6 +549,7 @@ final class DatabaseService {
             WHERE id = \(itemId)
             """)
         try await fetchCatalog()
+        try await fetchLists()
     }
 
     func resetDatabase() async throws {
