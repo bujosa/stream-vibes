@@ -19,8 +19,17 @@ struct ListDetailView: View {
         case watched = "Watched"
     }
 
+    private var liveEntries: [ListEntry] {
+        let items = Dictionary(uniqueKeysWithValues: db.catalogItems.map { ($0.id, $0) })
+        return db.currentEntries.map { entry in
+            var updated = entry
+            updated.item = items[entry.itemId] ?? entry.item
+            return updated
+        }
+    }
+
     private var filteredEntries: [ListEntry] {
-        var entries = db.currentEntries
+        var entries = liveEntries
         switch filter {
         case .all: break
         case .toWatch: entries = entries.filter { $0.item?.watchStatus == .pending }
@@ -42,7 +51,7 @@ struct ListDetailView: View {
     }
 
     private var unwatchedCount: Int {
-        db.currentEntries.filter { $0.item?.isWatched != true }.count
+        liveEntries.filter { $0.item?.isWatched != true }.count
     }
 
     var body: some View {
