@@ -1,0 +1,38 @@
+# Build output
+.build_output/
+DerivedData/
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
+xcuserdata/
+*.xcscmblueprint
+
+# Tuist
+Derived/
+Tuist/.build/
+
+# macOS
+.DS_Store
+*.swp
+*~
+
+# SPM
+.swiftpm/
+.build/
+
+# Private credentials and local runtime state
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+*.sqlite
+*.sqlite3
+*.db
+*.dmg
+*.xcresult/
