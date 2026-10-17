@@ -110,7 +110,7 @@ struct CatalogView: View {
                             .font(.system(size: 28, weight: .bold))
                             .foregroundStyle(SVTheme.textPrimary)
 
-                        Text("\(db.catalogItems.count) items in your collection")
+                        Text("\(db.catalogItems.count) \(db.catalogItems.count == 1 ? "item" : "items") in your collection")
                             .font(.subheadline)
                             .foregroundStyle(SVTheme.textSecondary)
                     }
@@ -266,7 +266,7 @@ struct CatalogView: View {
                 Text("Your catalog is empty")
                     .font(.title3)
                     .foregroundStyle(SVTheme.textSecondary)
-                Text("Add movies, series and anime to start tracking")
+                Text("Add movies, series, anime and telenovelas to start tracking")
                     .font(.caption)
                     .foregroundStyle(SVTheme.textMuted)
                 Button {
