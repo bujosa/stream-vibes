@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version number (e.g. 1.0.0)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build and Release
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Tuist
+        run: |
+          brew tap tuist/tuist
+          brew install tuist
+          tuist version
+
+      - name: Extract version
+        id: version
+        env:
+          REQUESTED_VERSION: ${{ github.event.inputs.version }}
+        run: |
+          VERSION="${REQUESTED_VERSION:-${GITHUB_REF#refs/tags/v}}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([-+][A-Za-z0-9.-]+)?$ ]]; then
+            echo "::error::Version must be a semantic version" >&2
+            exit 1
+          fi
+          printf 'VERSION=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Test credential migration
+        run: swift test
+
+      - name: Build Release
+        run: make release
+
+      - name: Create DMG
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.VERSION }}
+        run: |
+          chmod +x scripts/create-dmg.sh
+          ./scripts/create-dmg.sh "$RELEASE_VERSION"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.VERSION }}
+          name: StreamVibes v${{ steps.version.outputs.VERSION }}
+          draft: false
+          generate_release_notes: true
+          files: .build_output/StreamVibes.dmg

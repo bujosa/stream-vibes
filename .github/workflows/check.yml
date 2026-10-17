@@ -1,0 +1,20 @@
+name: Source checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test security and domain behavior
+        run: swift test
+      - name: Install Tuist
+        run: brew install tuist
+      - name: Resolve dependencies
+        run: make install
+      - name: Build
+        run: make build XCODEBUILD_FLAGS=CODE_SIGNING_ALLOWED=NO
